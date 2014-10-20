@@ -58993,7 +58993,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Crear correo para Dueño",
+											"text": "Crear SMS para Dueño",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -59164,7 +59164,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Crear correo para quien lo encontró",
+											"text": "Crear SMS para quien lo encontró",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -59746,7 +59746,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Enviar correo a dueño",
+											"text": "Enviar SMS a dueño",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -59917,7 +59917,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Enviar correo a quien lo encontró",
+											"text": "Enviar SMS a quien lo encontró",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
