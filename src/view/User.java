@@ -10,7 +10,13 @@ public class User {
     /**
      * 
      */
-    public User() {
+    User() {
+    }
+    
+    User(String name, String pwd)
+    {
+    	setUserName(name);
+    	setPassword(pwd);
     }
 
     /**

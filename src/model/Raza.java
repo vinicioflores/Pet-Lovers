@@ -6,16 +6,22 @@ import java.util.*;
  */
 public class Raza {
 
+	public Raza(){}
     /**
      * 
      */
-    public Raza() {
+    public Raza(Razas raza) {
+    	this.raza = raza;
     }
 
     /**
      * 
      */
     private ArrayList <String> razas ;
+    /**
+     * 
+     */
+    private Razas raza;
 
     /**
      * @param raza 

@@ -1,10 +1,11 @@
 package model;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Mascota {
+public class Mascota implements Serializable {
 
     /**
      * 
@@ -345,5 +346,17 @@ public class Mascota {
         // TODO implement here
         return false;
     }
+
+	@Override
+	public String toString() {
+		return "Mascota [tipoMascota=" + tipoMascota + ", raza=" + raza
+				+ ", razas=" + razas + ", nombre=" + nombre + ", chip=" + chip
+				+ ", color=" + color + ", foto=" + foto + ", contacto="
+				+ contacto + ", extraviado=" + extraviado + ", lugarExtravio="
+				+ lugarExtravio + ", fechaExtravio=" + fechaExtravio
+				+ ", recompensa=" + recompensa + ", descripcion=" + descripcion
+				+ ", estado=" + estado + ", tamaño=" + tamaño + ", fotos="
+				+ fotos + "]";
+	}
 
 }
