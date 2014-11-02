@@ -1,5 +1,4 @@
 package model;
-import java.util.*;
 
 /**
  * 
@@ -10,6 +9,9 @@ public class Asociacion {
      * 
      */
     public Asociacion() {
+    	nombre = "";
+    	asocID = hashCode();
+    	donacionesTotal = 0;
     }
 
     /**
@@ -33,7 +35,7 @@ public class Asociacion {
      * @return
      */
     public void donar(float monto ) {
-        // TODO implement here
+        donacionesTotal += monto;
     }
 
     /**
@@ -41,15 +43,30 @@ public class Asociacion {
      * @return
      */
     public void setAsocID(int id) {
-        // TODO implement here
+        asocID = id;
     }
 
     /**
      * @return
      */
     public int getAsocID() {
-        // TODO implement here
-        return 0;
+        return asocID;
     }
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public float getDonacionesTotal() {
+		return donacionesTotal;
+	}
+
+	public void setDonacionesTotal(float donacionesTotal) {
+		this.donacionesTotal = donacionesTotal;
+	}
 
 }

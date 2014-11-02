@@ -1,4 +1,6 @@
 package model;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -7,27 +9,43 @@ import java.util.*;
 public class CasasCuna extends Buscador {
 
     /**
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
      * 
      */
-    public CasasCuna() {
+    public CasasCuna() throws FileNotFoundException, ClassNotFoundException, IOException {
+    	super();
+    	prepareArrays();
     }
 
+    private void prepareArrays()
+    {
+    	casasCuna = new ArrayList<Adoptante>();
+    	listaNegra = new ArrayList<Adoptante>();
+    }
+    
     /**
      * 
      */
-    private ArrayList <Adoptante> casasCuna ;
+    private ArrayList <Adoptante> casasCuna;
 
     /**
      * 
      */
     private ArrayList <Adoptante> listaNegra ;
-
+    
     /**
      * @param contactSrc  
      * @return
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
      */
-    CasasCuna(ArrayList <Adoptante> contactSrc ) {
-        // TODO implement here
+    CasasCuna(ArrayList <Adoptante> contactSrc ) throws FileNotFoundException, ClassNotFoundException, IOException {
+    	super();
+        prepareArrays();
+        casasCuna = contactSrc;
     }
 
     /**
@@ -35,7 +53,13 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public boolean remove(int tel) {
-        // TODO implement here
+    	int k;
+        for(k = 0; casasCuna.get(k).getTelefono() != tel; k++);
+        if(casasCuna.get(k).getTelefono() == tel)
+        {
+        	casasCuna.remove(k);
+        	return true;
+        }
         return false;
     }
 
@@ -44,7 +68,13 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public boolean remove(String mail ) {
-        // TODO implement here
+    	int k;
+        for(k = 0; casasCuna.get(k).getCorreo() != mail; k++);
+        if(casasCuna.get(k).getCorreo() == mail)
+        {
+        	casasCuna.remove(k);
+        	return true;
+        }
         return false;
     }
 
@@ -53,7 +83,13 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public boolean remove(boolean donacion ) {
-        // TODO implement here
+    	int k;
+        for(k = 0; casasCuna.get(k).isRequiereDonacion() != donacion; k++);
+        if(casasCuna.get(k).isRequiereDonacion() == donacion)
+        {
+        	casasCuna.remove(k);
+        	return true;
+        }
         return false;
     }
 
@@ -62,17 +98,50 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public boolean remove(String[] nombreCompleto) {
-        // TODO implement here
+    	int k;
+    	String[] fullNombre = {"","","",""};
+        for(k = 0; !fullNombre.equals(nombreCompleto); k++){
+        	fullNombre[0] = casasCuna.get(k).getPrimerNombre();
+        	fullNombre[1] = casasCuna.get(k).getSegundoNombre();
+        	fullNombre[2] = casasCuna.get(k).getPrimerApellido();
+        	fullNombre[3] = casasCuna.get(k).getSegundoApellido();
+        }
+        if(fullNombre.equals(nombreCompleto) == true)
+        {
+        	casasCuna.remove(k);
+        	return true;
+        }
         return false;
     }
 
     /**
      * @param nombreCompleto[] 
-     * @return
+     * @return un puntero a la persona que coincida en nombre, o nulo si no existe
      */
     public Adoptante contactar(String nombreCompleto[]) {
-        // TODO implement here
+    	int k;
+    	String[] fullNombre = {"","","",""};
+    	Adoptante pPersona=null;
+        for(k = 0; !fullNombre.equals(nombreCompleto); k++){
+        	pPersona = casasCuna.get(k);
+        	fullNombre[0] = casasCuna.get(k).getPrimerNombre();
+        	fullNombre[1] = casasCuna.get(k).getSegundoNombre();
+        	fullNombre[2] = casasCuna.get(k).getPrimerApellido();
+        	fullNombre[3] = casasCuna.get(k).getSegundoApellido();
+        }
+        if(fullNombre.equals(nombreCompleto) == true)
+        {
+        	return pPersona;
+        }
         return null;
+    }
+    
+    public Adoptante findByID(int id)
+    {
+    	int j;
+    	for(j = 0; casasCuna.get(j).getID() != id; j++);
+    	if(casasCuna.get(j).getID() == id) return casasCuna.get(j);
+    	return null;
     }
 
     /**
@@ -80,7 +149,11 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public void agregarListaNegra(int adopID ) {
-        // TODO implement here
+    	Adoptante target = findByID(adopID);
+    	if(target != null){
+    		if(!listaNegra.contains(target)) 
+    			listaNegra.add(target);
+    	}
     }
 
     /**
@@ -88,7 +161,12 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public boolean quitarListaNegra(int adoptID) {
-        // TODO implement here
+        Adoptante target = findByID(adoptID);
+        if(target != null)
+        {
+        	if(listaNegra.contains(target))
+        		return listaNegra.remove(target);
+        }
         return false;
     }
 
@@ -97,7 +175,7 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public void add(Adoptante adoptant) {
-        // TODO implement here
+        casasCuna.add(adoptant);
     }
 
     /**
@@ -108,7 +186,7 @@ public class CasasCuna extends Buscador {
      * @return
      */
     public void add(String[] nombreCompleto, int tel, String mail, boolean donacion) {
-        // TODO implement here
+        add(new Adoptante(nombreCompleto,tel,mail,donacion));
     }
 
 }

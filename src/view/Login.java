@@ -26,9 +26,9 @@ import java.awt.event.ActionEvent;
 public class Login extends JFrame {
 
 	private RegWin regwin;
-	private JFrame mainWin;
+	private MainWindow mainWin;
 	private Control controller;
-	private String file = "users.rgf";
+	private static final long serialVersionUID=1092742389479238470L;
 	
 	
     /**
@@ -37,6 +37,8 @@ public class Login extends JFrame {
     Login(Control controller) {
     	super();
     	this.controller = controller;
+    	setDefaultLookAndFeelDecorated(false);
+    	
     	setTitle("PetLovers Control de Acceso");
     	setBounds(20,20,300,150);
     	getContentPane().setLayout(null);
@@ -57,15 +59,10 @@ public class Login extends JFrame {
     	JButton btnRegistrarse = new JButton("Registrarse");
     	btnRegistrarse.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
-    			regwin = new RegWin();
+    			hide();
+    			regwin = new RegWin(controller);
     			regwin.move(15,15);
     			regwin.setVisible(true);
-    			try {
-					signup(textField.getText(),String.valueOf(passwordField.getPassword()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
     		}
     	});
     	btnRegistrarse.setBounds(10, 78, 165, 23);
@@ -75,7 +72,15 @@ public class Login extends JFrame {
     	btnIngresar.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			try {
-					mainWin = new MainWindow(controller);
+    				if(controller.login(textField.getText(), String.valueOf(passwordField.getPassword()))){
+    					mainWin = controller.getView().getLogin().doMainWindow();
+    					mainWin.setVisible(true);
+    	    			mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    				} else { 
+    					ErrorDialog loginErr =  new ErrorDialog("No se encontró usuario '" + textField.getText()  +"' registrado en el sistema ... ");
+    					loginErr.setVisible(true);
+    					loginErr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    				}
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -86,8 +91,8 @@ public class Login extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-    			mainWin.setVisible(true);
-    			mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    			textField.setText("");
+    			passwordField.setText("");
     		}
     	});
     	btnIngresar.setBounds(185, 78, 89, 23);
@@ -97,71 +102,24 @@ public class Login extends JFrame {
     	passwordField.setBounds(100, 33, 174, 20);
     	getContentPane().add(passwordField);
     }
+    
+    public MainWindow doMainWindow() throws FileNotFoundException, ClassNotFoundException, IOException
+    {
+    	if(mainWin == null){
+    		MainWindow PMW = new MainWindow(controller);
+    		return PMW;
+    	}
+    	return mainWin;
+    }
+    
 
     /**
      * 
      */
-    private ArrayList <User> users ;
     private JTextField textField;
     private JPasswordField passwordField;
 
     /**
      * 
      */
-
-
-    /**
-     * @param username 
-     * @param password 
-     * @return
-     */
-    public boolean login(String username, String password) {
-    	
-        return false;
-    }
-
-    /**
-     * @param username 
-     * @param password 
-     * @return
-     * @throws IOException 
-     */
-    public void signup(String username, String password) throws IOException {
-        
-    	try {
-    		users.add(new User(username,password));
-    	} catch (NullPointerException e){
-    		users = new ArrayList<User>();
-    		users.add(new User(username,password));
-    	}
-        ObjectOutputStream oos = null;
-        try {
-			oos = new ObjectOutputStream(new FileOutputStream(file));
-		} catch (FileNotFoundException e) {
-			System.out.println("Error, no se encontró el archivo de registro de usuarios ... ");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
-        for (int i = 0; i < users.size(); i++)
-        {
-            // ojo, se hace un new por cada Persona. El new dentro del bucle.
-            User pUser = users.get(i);
-            try {
-				oos.writeObject(pUser);
-			} catch (IOException e) {
-				System.out.println("Error al intentar escribir en el archivo de registro de usuarios ... ");
-			}
-        }
-        oos.close();  // Se cierra al terminar.
-    }
-
-    /**
-     * @param username 
-     * @return
-     */
-    private boolean exists(String username) {
-        // TODO implement here
-        return false;
-    }
 }

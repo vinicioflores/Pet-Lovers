@@ -1,14 +1,22 @@
 package model;
 
 import view.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Persona {
+public class Persona implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2743407126392788006L;
+
+
+	/**
      * 
      */
     public Persona() {
@@ -17,47 +25,47 @@ public class Persona {
     /**
      * 
      */
-    private String primerNombre;
+    protected String primerNombre;
 
     /**
      * 
      */
-    private String segundoNombre;
+    protected String segundoNombre;
 
     /**
      * 
      */
-    private String primerApellido;
+    protected String primerApellido;
 
     /**
      * 
      */
-    private String segundoApellido ;
+    protected String segundoApellido ;
 
     /**
      * 
      */
-    private boolean requiereDonacion;
+    protected boolean requiereDonacion;
 
     /**
      * 
      */
-    private Condicion condicionCasaCuna ;
+    protected Condicion condicionCasaCuna ;
 
     /**
      * 
      */
-    private boolean aceptaRecompensa ;
+    protected boolean aceptaRecompensa ;
 
     /**
      * 
      */
-    private ArrayList <Chip> MascotasEncontradas ;
+    protected ArrayList <Chip> MascotasEncontradas ;
 
     /**
      * 
      */
-    private User usuarioAsociado;
+    protected User usuarioAsociado;
 
 
     /**
@@ -65,7 +73,10 @@ public class Persona {
      * @return
      */
     public Persona(String[] nombreCompleto) {
-        // TODO implement here
+        setPrimerNombre(nombreCompleto[0]);
+        setSegundoNombre(nombreCompleto[1]);
+        setPrimerApellido(nombreCompleto[2]);
+        setSegundoApellido(nombreCompleto[3]);
     }
 
     /**
@@ -74,7 +85,11 @@ public class Persona {
      * @return
      */
     public Persona(String[] nombreCompleto, boolean donacion) {
-        // TODO implement here
+        setPrimerNombre(nombreCompleto[0]);
+        setSegundoNombre(nombreCompleto[1]);
+        setPrimerApellido(nombreCompleto[2]);
+        setSegundoApellido(nombreCompleto[3]);
+        this.requiereDonacion = donacion;
     }
 
     /**
@@ -82,15 +97,14 @@ public class Persona {
      * @return
      */
     public void setCondicionCasaCuna(Condicion condition ) {
-        // TODO implement here
+        this.condicionCasaCuna = condition;
     }
 
     /**
      * @return
      */
     public Condicion getCondicionCasaCuna() {
-        // TODO implement here
-        return null;
+        return this.condicionCasaCuna;
     }
 
     /**
@@ -98,7 +112,7 @@ public class Persona {
      * @return
      */
     public void agregarMascotaEncontrada(Chip chip ) {
-        // TODO implement here
+        this.MascotasEncontradas.add(chip);
     }
 
     /**
@@ -106,15 +120,70 @@ public class Persona {
      * @return
      */
     public void setUsuarioAsociado(User u) {
-        // TODO implement here
+        usuarioAsociado = u;
     }
 
     /**
      * @return
      */
     public User getUsuarioAsociado() {
-        // TODO implement here
-        return null;
+    	return usuarioAsociado;
     }
+
+	public String getPrimerNombre() {
+		return primerNombre;
+	}
+
+	public void setPrimerNombre(String primerNombre) {
+		this.primerNombre = primerNombre;
+	}
+
+	public String getSegundoNombre() {
+		return segundoNombre;
+	}
+
+	public void setSegundoNombre(String segundoNombre) {
+		this.segundoNombre = segundoNombre;
+	}
+
+	public String getPrimerApellido() {
+		return primerApellido;
+	}
+
+	public void setPrimerApellido(String primerApellido) {
+		this.primerApellido = primerApellido;
+	}
+
+	public String getSegundoApellido() {
+		return segundoApellido;
+	}
+
+	public void setSegundoApellido(String segundoApellido) {
+		this.segundoApellido = segundoApellido;
+	}
+
+	public boolean isRequiereDonacion() {
+		return requiereDonacion;
+	}
+
+	public void setRequiereDonacion(boolean requiereDonacion) {
+		this.requiereDonacion = requiereDonacion;
+	}
+
+	public boolean isAceptaRecompensa() {
+		return aceptaRecompensa;
+	}
+
+	public void setAceptaRecompensa(boolean aceptaRecompensa) {
+		this.aceptaRecompensa = aceptaRecompensa;
+	}
+
+	public ArrayList<Chip> getMascotasEncontradas() {
+		return MascotasEncontradas;
+	}
+
+	public void setMascotasEncontradas(ArrayList<Chip> mascotasEncontradas) {
+		MascotasEncontradas = mascotasEncontradas;
+	}
 
 }

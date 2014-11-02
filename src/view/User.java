@@ -1,19 +1,27 @@
 package view;
 
-import java.util.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * 
  */
-public class User {
+public class User implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7246256387114214782L;
+
+	/**
      * 
      */
-    User() {
+    public User() {
     }
     
-    User(String name, String pwd)
+    public User(String name, String pwd)
     {
     	setUserName(name);
     	setPassword(pwd);
@@ -28,40 +36,41 @@ public class User {
      * 
      */
     private String password;
-
+    
 
     /**
      * @param name  
      * @return
      */
-    public boolean setUserName(String name ) {
-        // TODO implement here
-        return false;
+    public void setUserName(String name ) {
+        username = name;
     }
 
     /**
      * @param pwd  
      * @return
      */
-    public boolean setPassword(String pwd ) {
-        // TODO implement here
-        return false;
+    public void setPassword(String pwd ) {
+        password = pwd;
     }
 
     /**
      * @return
      */
     public String getUsername() {
-        // TODO implement here
-        return "";
+        return username;
     }
 
     /**
      * @return
      */
     public String getPassword() {
-        // TODO implement here
-        return "";
+    	return password;
     }
+
+    @Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + "]";
+	}
 
 }

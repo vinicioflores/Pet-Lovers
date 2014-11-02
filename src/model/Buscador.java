@@ -1,4 +1,6 @@
 package model;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -7,18 +9,25 @@ import java.util.*;
 public class Buscador extends Editor {
 
     /**
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
      * 
      */
-    public Buscador() {
+    public Buscador() throws FileNotFoundException, ClassNotFoundException, IOException {
+    	super();
     }
 
     /**
-     * @param chip 
-     * @return
+     * @param chip : Chip
+     * @return Un puntero a la mascota que posea esa mismo chip especificado como parámetro
      */
     public Mascota find(Chip chip) {
-        // TODO implement here
-        return null;
+    	
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).equals(chip)) return mascotas.get(k);
+    	}
+    	return null;
     }
 
     /**
@@ -26,8 +35,10 @@ public class Buscador extends Editor {
      * @return
      */
     public Mascota find(Estado estado) {
-        // TODO implement here
-        return null;
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getEstado().equals((Estado)estado)) return mascotas.get(k);
+    	}
+    	return null;
     }
 
     /**
@@ -35,8 +46,10 @@ public class Buscador extends Editor {
      * @return
      */
     public Mascota find(Date fechaExtravio) {
-        // TODO implement here
-        return null;
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getFechaExtravio().equals(fechaExtravio) )return mascotas.get(k);
+    	}
+    	return null; 
     }
 
     /**
@@ -44,16 +57,20 @@ public class Buscador extends Editor {
      * @return
      */
     public Mascota find(Contacto infoContacto) {
-        // TODO implement here
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getContacto().equals((Contacto)infoContacto) )return mascotas.get(k);
+    	}
         return null;
     }
-
+    
     /**
      * @param raza 
      * @return
      */
-    public Mascota findRaza(String raza) {
-        // TODO implement here
+    public Mascota findRaza(Raza raza) {
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getRaza().equals(raza) )return mascotas.get(k);
+    	}
         return null;
     }
 
@@ -62,7 +79,9 @@ public class Buscador extends Editor {
      * @return
      */
     public Mascota findLugar(String lugarExtravio ) {
-        // TODO implement here
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getLugarExtravio().equals(lugarExtravio) )return mascotas.get(k);
+    	}
         return null;
     }
 
@@ -71,7 +90,9 @@ public class Buscador extends Editor {
      * @return
      */
     public Mascota findDescripcion(String notas) {
-        // TODO implement here
+    	for(int k = 0; mascotas.get(k) != null; k++){
+    		if(mascotas.get(k).getDescripcion().equals(notas) )return mascotas.get(k);
+    	}
         return null;
     }
 

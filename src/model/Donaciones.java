@@ -1,4 +1,6 @@
 package model;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -7,9 +9,13 @@ import java.util.*;
 public class Donaciones extends Buscador {
 
     /**
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
      * 
      */
-    public Donaciones() {
+    public Donaciones() throws FileNotFoundException, ClassNotFoundException, IOException {
+    	super();
     }
 
     /**

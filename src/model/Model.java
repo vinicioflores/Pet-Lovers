@@ -1,4 +1,6 @@
 package model;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -7,9 +9,13 @@ import java.util.*;
 public class Model {
 
     /**
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
      * 
      */
-    public Model() {
+    public Model() throws FileNotFoundException, ClassNotFoundException, IOException {
+    	this.registro = new Buscador();
     }
 
     /**
@@ -23,15 +29,14 @@ public class Model {
      * @return
      */
     public void setRegistro(Buscador newreg) {
-        // TODO implement here
+        this.registro = newreg;
     }
 
     /**
      * @return
      */
     public Buscador getRegistro() {
-        // TODO implement here
-        return null;
+        return this.registro;
     }
 
 }

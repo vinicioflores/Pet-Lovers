@@ -11,6 +11,24 @@ public class Mascota implements Serializable {
      * 
      */
     public Mascota() {
+    	instanceAll();
+    }
+    
+    private void instanceAll()
+    {
+    	fechaExtravio = new Date();
+    	tipoMascota = new String();
+    	raza = new Raza();
+    	razas = new ArrayList<Raza>();
+    	chip = new Chip();
+    	foto = new String();
+    	contacto = new Contacto();
+    	extraviado = false;
+    	lugarExtravio = new String();
+    	recompensa = new Recompensa();
+    	estado = new Estado();
+    	descripcion = new String();
+    	fotos = new Fotos();
     }
 
     /**
@@ -91,7 +109,7 @@ public class Mascota implements Serializable {
     /**
      * 
      */
-    private ArrayList <String> fotos ;
+    private Fotos fotos ;
 
     /**
      * 
@@ -102,7 +120,8 @@ public class Mascota implements Serializable {
      * @return
      */
     public Mascota(String nombre) {
-        // TODO implement here
+        instanceAll();
+        this.nombre = nombre;
     }
 
     /**
@@ -110,7 +129,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setTipoMascota(String type) {
-        // TODO implement here
+    	tipoMascota = new String(type);
     }
 
     /**
@@ -118,7 +137,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setRaza(Raza raza) {
-        // TODO implement here
+        this.raza = raza;
     }
 
     /**
@@ -126,7 +145,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setNombre(String nombre) {
-        // TODO implement here
+        this.nombre = nombre;
     }
 
     /**
@@ -134,7 +153,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setChip(Chip chip) {
-        // TODO implement here
+        this.chip = chip;
     }
 
     /**
@@ -142,7 +161,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setColor(Color color) {
-        // TODO implement here
+        this.color = color;
     }
 
     /**
@@ -150,7 +169,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setFoto(String foto) {
-        // TODO implement here
+        this.foto = foto;
     }
 
     /**
@@ -158,7 +177,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setContacto(Contacto contact) {
-        // TODO implement here
+        this.contacto = contact;
     }
 
     /**
@@ -166,7 +185,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setExtraviado(boolean isPerdido) {
-        // TODO implement here
+        this.extraviado = isPerdido;
     }
 
     /**
@@ -174,7 +193,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setLugarExtravio(String lugar) {
-        // TODO implement here
+        this.lugarExtravio = lugar;
     }
 
     /**
@@ -182,7 +201,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setFechaExtravio(Date fecha) {
-        // TODO implement here
+        this.fechaExtravio = fecha;
     }
 
     /**
@@ -190,7 +209,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setRecompensa(Recompensa reward) {
-        // TODO implement here
+        this.recompensa = reward;
     }
 
     /**
@@ -198,103 +217,91 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setDescripcion(String notas) {
-        // TODO implement here
+        this.descripcion = notas;
     }
 
     /**
      * @return
      */
     public String getTipoMascota() {
-        // TODO implement here
-        return "";
+        return tipoMascota;
     }
 
     /**
      * @return
      */
     public Raza getRaza() {
-        // TODO implement here
-        return null;
+        return raza;
     }
 
     /**
      * @return
      */
     public String getNombre() {
-        // TODO implement here
-        return "";
+        return nombre;
     }
 
     /**
      * @return
      */
     public Chip getChip() {
-        // TODO implement here
-        return null;
+        return chip;
     }
 
     /**
      * @return
      */
     public Color getColor() {
-        // TODO implement here
-        return null;
+        return color;
     }
 
     /**
      * @return
      */
     public String getFoto() {
-        // TODO implement here
-        return "";
+        return foto;
     }
 
     /**
      * @return
      */
     public Contacto getContacto() {
-        // TODO implement here
-        return null;
+        return contacto;
     }
 
     /**
      * @return
      */
     public boolean getExtraviado() {
-        // TODO implement here
-        return false;
+        return this.extraviado;
     }
 
     /**
      * @return
      */
     public String getLugarExtravio() {
-        // TODO implement here
-        return "";
+        return lugarExtravio;
     }
 
     /**
      * @return
      */
     public Date getFechaExtravio() {
-        // TODO implement here
-        return null;
+        return fechaExtravio;
     }
 
     /**
      * @return
      */
     public Recompensa getRecompensa() {
-        // TODO implement here
-        return null;
+        return recompensa;
     }
 
     /**
      * @return
      */
     public String getDescripcion() {
-        // TODO implement here
-        return "";
+        return descripcion;
     }
 
     /**
@@ -302,15 +309,14 @@ public class Mascota implements Serializable {
      * @return
      */
     public void setEstado(Estado newstat) {
-        // TODO implement here
+        this.estado = newstat; 
     }
 
     /**
      * @return
      */
     public Estado getEstado() {
-        // TODO implement here
-        return null;
+        return estado;
     }
 
     /**
@@ -318,7 +324,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void addRaza(Raza raza) {
-        // TODO implement here
+        if(!razas.contains(raza)) razas.add(raza);
     }
 
     /**
@@ -326,8 +332,11 @@ public class Mascota implements Serializable {
      * @return
      */
     public boolean removeRaza(Raza raza) {
-        // TODO implement here
-    	return false;
+        if(razas.contains(raza)){
+        	razas.remove(raza);
+        	return true;
+        }
+        return false;
     }
 
     /**
@@ -335,7 +344,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public void registrarFoto(String fotodir) {
-        // TODO implement here
+        this.fotos.add(fotodir);
     }
 
     /**
@@ -343,8 +352,7 @@ public class Mascota implements Serializable {
      * @return
      */
     public boolean quitarFoto(String fotodir ) {
-        // TODO implement here
-        return false;
+        return fotos.remove(fotodir);
     }
 
 	@Override
@@ -358,5 +366,30 @@ public class Mascota implements Serializable {
 				+ ", estado=" + estado + ", tamaño=" + tamaño + ", fotos="
 				+ fotos + "]";
 	}
-
+	
+	public boolean equals(Chip chipID)
+	{
+		if(chip.getID().equals(chipID.getID()) == true) return true;
+		return false;
+	}
+	
+	public boolean equals(Date pFechaReportada)
+	{
+		if(fechaExtravio.equals(pFechaReportada) == true) return true;
+		return false;
+	}
+	
+	public boolean equals(Contacto reportante)
+	{
+		if(this.getContacto().equals(reportante) == true) return true;
+		return false;
+	}
+	
+	public boolean equals(Estado pEstado)
+	{
+		if(this.getEstado().equals(pEstado) == true) return true;
+		return false;
+	}
+	
+	
 }

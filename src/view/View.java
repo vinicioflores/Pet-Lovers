@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Panel;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * 
@@ -20,6 +22,7 @@ public class View {
 	private static Login login;
 	private JFrame frame;
 	private static View pView;
+	private  static Version credits;
     /**
      * 
      */
@@ -53,9 +56,13 @@ public class View {
 
 	/**
 	 * Arranca la aplicación
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public void boot() throws FileNotFoundException, ClassNotFoundException, IOException {
 		pView = new View();
+		model = new Model();
 		controller = new Control(pView, model);
 		EventQueue.invokeLater(new Runnable() {
 			
@@ -97,7 +104,7 @@ public class View {
 					JMenuItem mntmCrditos = new JMenuItem("Cr\u00E9ditos");
 					mntmCrditos.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							Version credits = new Version();
+							credits = new Version();
 							credits.setVisible(true);
 						}
 					});
@@ -126,10 +133,22 @@ public class View {
 					btnControlDeAcceso.addActionListener(new ActionListener() {
 						
 						public void actionPerformed(ActionEvent arg0) {
-							login = new Login(controller);
-							login.setVisible(true);
+								try {
+									login = doLogin();
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								login.setVisible(true);
 						}
 					});
+					
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -141,4 +160,18 @@ public class View {
 	
 	public void View() { pView = this; }
 	public JFrame getVentanaPrincipal(){ return ventanaPrincipal; }
+	
+	public Login getLogin()
+	{
+		return login;
+	}
+	
+    public Login doLogin() throws FileNotFoundException, ClassNotFoundException, IOException
+    {
+    	if(login == null){
+    		Login PMW = new Login(controller);
+    		return PMW;
+    	}
+    	return login;
+    }
 }

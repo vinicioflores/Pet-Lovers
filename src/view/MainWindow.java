@@ -58,6 +58,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow(Control controller) throws FileNotFoundException, ClassNotFoundException, IOException {
 		this.controller = controller;
+		controller.getView().getLogin().dispose();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 661, 590);
 		contentPane = new JPanel();
