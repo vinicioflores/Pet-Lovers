@@ -1,15 +1,21 @@
 package model;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Chip {
+public class Chip implements Serializable {
 
     /**
      * 
      */
     public Chip() {
+    }
+    
+    public Chip(String id)
+    {
+    	this.id = id;
     }
 
     /**
@@ -24,22 +30,26 @@ public class Chip {
      * @return
      */
     public void setID(String newid) {
-        // TODO implement here
+        id = newid;
     }
 
     /**
      * @return
      */
     public String getID() {
-        // TODO implement here
-        return "";
+        return id;
     }
 
     /**
      * @param algorythm
      */
     public void genID(AlgoritmosChip algorythm) {
-        // TODO implement here
+        id = String.valueOf(hashCode());
     }
+
+	@Override
+	public String toString() {
+		return "Chip [id=" + id.toString() + "]";
+	}
 
 }

@@ -27,7 +27,9 @@ import javax.swing.event.ChangeListener;
 
 import model.Color;
 import model.Razas;
+import model.RazasGatos;
 import model.RazasPerros;
+import model.Tamaño;
 
 
 public class ReporteMascota extends JFrame {
@@ -35,11 +37,12 @@ public class ReporteMascota extends JFrame {
 	private Control controller;
 	private JPanel contentPane;
 	
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JComboBox comboBox_4;
+	private JComboBox comboBox;      // Tipo de mascota
+	private JComboBox comboBox_1;    // Raza de animal
+	private JComboBox comboBox_2;    // Color de mascota
+	private JComboBox comboBox_3;    // Tipo de reporte o estado inicial de reporte
+	private JComboBox comboBox_4;    // Moneda de recompensa (si corresponde)
+	private JComboBox comboBox_5;    // Lista de tamaños
 	
 	private JTextField textField;
 	private JTextField textField_1;
@@ -53,10 +56,12 @@ public class ReporteMascota extends JFrame {
 	private JFormattedTextField formattedTextField;
 	private ReporteMascota pVentanaReporte = this;
 	
+	
 	/**
 	 * Create the frame.
 	 */
 	public ReporteMascota(Control controller) {
+		setResizable(false);
 		this.controller = controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 987, 513);
@@ -68,13 +73,26 @@ public class ReporteMascota extends JFrame {
 		comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Combobox de raza ha cambiado! ");
-				if(comboBox.getSelectedItem().equals("Perro")){
+				
+				int selectedIndex = comboBox.getSelectedIndex();
+				if(selectedIndex == Razas.Perro.ordinal()){
 					comboBox_1.setModel(new DefaultComboBoxModel(RazasPerros.values()));
+					comboBox_1.repaint();
+				}
+				
+				else if(selectedIndex == Razas.Gato.ordinal()){
+					comboBox_1.setModel(new DefaultComboBoxModel(RazasGatos.values()));
+					comboBox_1.repaint();
+				}
+				
+				else {
+					comboBox_1.setModel(new DefaultComboBoxModel(new String[] {""}));
+					comboBox_1.repaint();
 				}
 					
 			}
 		});
+		
 		comboBox.setBounds(10, 36, 145, 30);
 		comboBox.setModel(new DefaultComboBoxModel(Razas.values()));
 		contentPane.add(comboBox);
@@ -84,13 +102,12 @@ public class ReporteMascota extends JFrame {
 		contentPane.add(lblTipoDeMascota);
 		
 		JLabel lblRazas = new JLabel("Raza");
-		lblRazas.setBounds(235, 11, 46, 14);
+		lblRazas.setBounds(219, 11, 46, 14);
 		contentPane.add(lblRazas);
 		
 		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(165, 36, 200, 30);
+		comboBox_1.setBounds(165, 36, 154, 30);
 		contentPane.add(comboBox_1);
-		controller.agregarRazas(comboBox_1);
 		
 		JLabel lblNombreDeMascota = new JLabel("Nombre de Mascota");
 		lblNombreDeMascota.setBounds(10, 110, 103, 14);
@@ -115,11 +132,11 @@ public class ReporteMascota extends JFrame {
 		contentPane.add(passwordField);
 		
 		JLabel lblColor = new JLabel("Color");
-		lblColor.setBounds(440, 11, 46, 14);
+		lblColor.setBounds(508, 11, 46, 14);
 		contentPane.add(lblColor);
 		
 		comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(375, 36, 161, 30);
+		comboBox_2.setBounds(465, 36, 136, 30);
 		comboBox_2.setModel(new DefaultComboBoxModel(Color.values()));
 		contentPane.add(comboBox_2);
 		
@@ -170,7 +187,7 @@ public class ReporteMascota extends JFrame {
 		contentPane.add(formattedTextField);
 		
 		chckbxHayRecompensa = new JCheckBox("Hay recompensa?");
-		chckbxHayRecompensa.setBounds(10, 338, 124, 23);
+		chckbxHayRecompensa.setBounds(10, 338, 145, 23);
 		chckbxHayRecompensa.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				if(!chckbxHayRecompensa.isSelected()) 
@@ -225,8 +242,18 @@ public class ReporteMascota extends JFrame {
 		});
 		btnAtrs.setBounds(495, 435, 104, 31);
 		contentPane.add(btnAtrs);
+		
+		comboBox_5 = new JComboBox();
+		comboBox_5.setModel(new DefaultComboBoxModel(Tamaño.values()));
+		comboBox_5.setBounds(329, 36, 126, 30);
+		contentPane.add(comboBox_5);
+		
+		JLabel lblTamao = new JLabel("Tama\u00F1o");
+		lblTamao.setBounds(365, 11, 46, 14);
+		contentPane.add(lblTamao);
 	}
 
+	
 	public JComboBox getComboBox() {
 		return comboBox;
 	}
@@ -338,5 +365,15 @@ public class ReporteMascota extends JFrame {
 
 	public void setpVentanaReporte(ReporteMascota pVentanaReporte) {
 		this.pVentanaReporte = pVentanaReporte;
+	}
+
+	
+	/*** Lista de tamaños ***/
+	public JComboBox getComboBox_5() {
+		return comboBox_5;
+	}
+
+	public void setComboBox_5(JComboBox comboBox_5) {
+		this.comboBox_5 = comboBox_5;
 	}
 }

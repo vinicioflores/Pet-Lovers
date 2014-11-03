@@ -1,6 +1,7 @@
 package model;
 
-import view.*;
+
+import control.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -20,6 +21,7 @@ public class Persona implements Serializable {
      * 
      */
     public Persona() {
+    	MascotasEncontradas = new ArrayList <Chip>();
     }
 
     /**
@@ -77,6 +79,7 @@ public class Persona implements Serializable {
         setSegundoNombre(nombreCompleto[1]);
         setPrimerApellido(nombreCompleto[2]);
         setSegundoApellido(nombreCompleto[3]);
+        MascotasEncontradas = new ArrayList <Chip>();
     }
 
     /**
@@ -90,6 +93,7 @@ public class Persona implements Serializable {
         setPrimerApellido(nombreCompleto[2]);
         setSegundoApellido(nombreCompleto[3]);
         this.requiereDonacion = donacion;
+        MascotasEncontradas = new ArrayList <Chip>();
     }
 
     /**
@@ -111,8 +115,14 @@ public class Persona implements Serializable {
      * @param chip  
      * @return
      */
-    public void agregarMascotaEncontrada(Chip chip ) {
-        this.MascotasEncontradas.add(chip);
+    public void agregarMascotaEncontrada(Chip chip) {
+    	try {
+    		MascotasEncontradas.add(chip);
+    	} catch (NullPointerException e) {
+    		System.out.println("Cannot add Chip ptr: " + chip);
+    		System.out.println("Memdir of MascotasEncontradas ArryaList ... : " + MascotasEncontradas);
+    		e.printStackTrace();
+    	}
     }
 
     /**

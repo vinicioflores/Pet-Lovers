@@ -1,4 +1,5 @@
 package model;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,8 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
-
-import view.User;
 
 /**
  * 
@@ -30,7 +29,9 @@ public class Registro implements Serializable {
     public Registro() throws FileNotFoundException, ClassNotFoundException, IOException {
     	mascotas = new ArrayList<Mascota>();
     	usuarios = new ArrayList<Contacto>();
+
     	leerPersonas();
+    	
     	mascotasEnAdopcion = new ArrayList<Chip>();
     }
 
@@ -52,7 +53,7 @@ public class Registro implements Serializable {
      * Contiene todos los usuarios del sistema
      */
     protected ArrayList <Contacto> usuarios;
-
+    
     /**
      * @param nPet 
      * @return None
@@ -172,7 +173,7 @@ public class Registro implements Serializable {
 	        try {
 				oos = new ObjectOutputStream(new FileOutputStream(contactRegName));
 			} catch (FileNotFoundException e) {
-				System.out.println("Error, no se encontró el archivo de registro de personas ... ");
+				System.out.println("ERR: Error, no se encontró el archivo de registro de personas ... ");
 				return;
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -186,7 +187,7 @@ public class Registro implements Serializable {
 	        	}
 				
 			} catch (IOException e) {
-				System.out.println("Error al intentar escribir en el archivo de registro de personas ... ");
+				System.out.println("ERR: Error al intentar escribir en el archivo de registro de personas ... ");
 			}
 	        
 	        oos.close();
@@ -216,6 +217,9 @@ public class Registro implements Serializable {
 			 		usuarios.add(currentUser);
 			 	} catch (IOException e) {
 			 		currentUser = null;
+			 	} catch(ClassNotFoundException e){
+			 		System.out.println("WARN: Archivo de registro de contactos corrupto ... Borrar archivo ... ");
+			 		return;
 			 	}
 			}
 	}
@@ -229,4 +233,36 @@ public class Registro implements Serializable {
 		}
 		return null;
 	}
+	
+	
+	   public void leerArchivoRegistroMascotas(String file) throws  ClassNotFoundException, IOException
+	    {
+	    	ObjectInputStream ois = null;
+			try {
+				ois = new ObjectInputStream(new FileInputStream(file));
+			} catch (FileNotFoundException e1) {
+				System.out.println("WARN: Archivo de registro de mascotas " + file + " no encontrado! ... ");
+				 return;
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+	    	// Se inicializa el puntero temporal
+	    	Mascota aux=new Mascota ();
+	    	// Mientras haya objetos
+	    	while (aux != null)
+	    	{
+	    	    try {
+					aux = (Mascota) ois.readObject();
+					mascotas.add(aux);
+				} catch ( Exception e) {
+					aux = null;
+				}
+	    	}
+	    	try {
+				ois.close();
+			} catch (IOException e) {
+				System.out.println("WARN: No se pudo cerrar el flujo de salida de serialización ... ");
+			}
+	    }
+	
 }

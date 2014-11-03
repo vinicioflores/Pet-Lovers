@@ -19,6 +19,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 /**
  * 
@@ -36,6 +37,8 @@ public class Login extends JFrame {
      */
     Login(Control controller) {
     	super();
+    	setResizable(false);
+    	getContentPane().setBackground(Color.WHITE);
     	this.controller = controller;
     	setDefaultLookAndFeelDecorated(false);
     	
@@ -44,10 +47,12 @@ public class Login extends JFrame {
     	getContentPane().setLayout(null);
     	
     	JLabel lblUsuario = new JLabel("Usuario");
+    	lblUsuario.setForeground(Color.BLUE);
     	lblUsuario.setBounds(10, 11, 46, 14);
     	getContentPane().add(lblUsuario);
     	
     	JLabel lblContrasea = new JLabel("Contrase\u00F1a");
+    	lblContrasea.setForeground(Color.BLUE);
     	lblContrasea.setBounds(10, 36, 80, 14);
     	getContentPane().add(lblContrasea);
     	
@@ -56,7 +61,12 @@ public class Login extends JFrame {
     	getContentPane().add(textField);
     	textField.setColumns(10);
     	
-    	JButton btnRegistrarse = new JButton("Registrarse");
+    	JButton btnRegistrarse = new JButton("");
+    	btnRegistrarse.setContentAreaFilled(false);
+    	btnRegistrarse.setBorderPainted(false);
+    	btnRegistrarse.setFocusable(false);
+    	btnRegistrarse.setRolloverIcon(new ImageIcon(Login.class.getResource("/resources/Registro165x23_pressed.png")));
+    	btnRegistrarse.setIcon(new ImageIcon(Login.class.getResource("/resources/Registro165x23.png")));
     	btnRegistrarse.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			hide();
@@ -68,12 +78,17 @@ public class Login extends JFrame {
     	btnRegistrarse.setBounds(10, 78, 165, 23);
     	getContentPane().add(btnRegistrarse);
     	
-    	JButton btnIngresar = new JButton("Ingresar");
+    	JButton btnIngresar = new JButton("");
+    	btnIngresar.setContentAreaFilled(false);
+    	btnIngresar.setBorderPainted(false);
+    	btnIngresar.setRolloverIcon(new ImageIcon(Login.class.getResource("/resources/Login89x23_pressed.png")));
+    	btnIngresar.setIcon(new ImageIcon(Login.class.getResource("/resources/Login89x23.png")));
+    	btnIngresar.setFocusable(false);
     	btnIngresar.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			try {
     				if(controller.login(textField.getText(), String.valueOf(passwordField.getPassword()))){
-    					mainWin = controller.getView().getLogin().doMainWindow();
+    					mainWin = controller.getView().getLogin().doMainWindow();   
     					mainWin.setVisible(true);
     	    			mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     				} else { 
@@ -91,6 +106,7 @@ public class Login extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+    			
     			textField.setText("");
     			passwordField.setText("");
     		}

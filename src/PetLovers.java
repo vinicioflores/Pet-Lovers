@@ -26,5 +26,4 @@ public class PetLovers {
 		GUI = new View();     // Construyo la vista, la cual a su vez construirá al model y al controlador
 		GUI.boot();			  // Le doy la orden de iniciarse
 	}
-
 }

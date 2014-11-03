@@ -13,6 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Panel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.awt.Color;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.CompoundBorder;
+import java.awt.Cursor;
+import java.awt.Dimension;
 
 /**
  * 
@@ -59,19 +64,23 @@ public class View {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 * @throws FileNotFoundException 
+	 * @wbp.parser.entryPoint
 	 */
 	public void boot() throws FileNotFoundException, ClassNotFoundException, IOException {
-		pView = new View();
+		pView = this;
 		model = new Model();
-		controller = new Control(pView, model);
+		controller = new Control(this, model);
+		
 		EventQueue.invokeLater(new Runnable() {
 			
 			public void run() {
 				try {
 					JFrame window = new JFrame();
+					window.getContentPane().setBackground(Color.WHITE);
+					window.setResizable(false);
 					window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					window.setTitle("Pet Lovers");
-					window.setBounds(25, 25, 500, 108);
+					window.setBounds(25, 25, 500, 171);
 					
 					JMenuBar menuBar = new JMenuBar();
 					window.setJMenuBar(menuBar);
@@ -115,21 +124,28 @@ public class View {
 					mnAyuda.add(mntmNewMenuItem);
 					window.getContentPane().setLayout(null);
 					
-					Panel panel = new Panel();
-					panel.setBounds(10, 10, 464, 33);
-					window.getContentPane().add(panel);
+					JButton btnTabloidePblico = new JButton("");
+					btnTabloidePblico.setFocusable(false);
+					btnTabloidePblico.setBorderPainted(false);
+					btnTabloidePblico.setLocation(34, 34);
+					window.getContentPane().add(btnTabloidePblico);
+					btnTabloidePblico.setSize(new Dimension(181, 53));
+					btnTabloidePblico.setRolloverSelectedIcon(new ImageIcon(View.class.getResource("/resources/Tabloid181x53_pressed.png")));
+					btnTabloidePblico.setRolloverIcon(new ImageIcon(View.class.getResource("/resources/Tabloid181x53_pressed.png")));
+					btnTabloidePblico.setIcon(new ImageIcon(View.class.getResource("/resources/Tabloid181x53.png")));
 					
-					JButton btnTabloidePblico = new JButton("Tabloide P\u00FAblico");
-					btnTabloidePblico.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							publicTabloid news = new publicTabloid();
-							news.setVisible(true);
-						}
-					});
-					panel.add(btnTabloidePblico);
-					
-					JButton btnControlDeAcceso = new JButton("Control de acceso");
-					panel.add(btnControlDeAcceso);
+					JButton btnControlDeAcceso = new JButton("");
+					btnControlDeAcceso.setSize(new Dimension(181, 53));
+					btnControlDeAcceso.setBounds(264, 34, 187, 53);
+					window.getContentPane().add(btnControlDeAcceso);
+					btnControlDeAcceso.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					btnControlDeAcceso.setContentAreaFilled(false);
+					btnControlDeAcceso.setBorder(new CompoundBorder());
+					btnControlDeAcceso.setRolloverIcon(new ImageIcon(View.class.getResource("/resources/Ingreso181x53_pressed.png")));
+					btnControlDeAcceso.setSelectedIcon(new ImageIcon(View.class.getResource("/resources/Ingreso181x53_pressed.png")));
+					btnControlDeAcceso.setIcon(new ImageIcon(View.class.getResource("/resources/Ingreso181x53.png")));
+					btnControlDeAcceso.setFocusable(false);
+					btnControlDeAcceso.setBorderPainted(false);
 					btnControlDeAcceso.addActionListener(new ActionListener() {
 						
 						public void actionPerformed(ActionEvent arg0) {
@@ -146,6 +162,12 @@ public class View {
 									e.printStackTrace();
 								}
 								login.setVisible(true);
+						}
+					});
+					btnTabloidePblico.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							publicTabloid news = new publicTabloid();
+							news.setVisible(true);
 						}
 					});
 					

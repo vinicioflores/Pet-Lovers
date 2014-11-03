@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class RegWin extends JFrame {
 
@@ -37,26 +39,32 @@ public class RegWin extends JFrame {
 	 * Create the frame.
 	 */
 	public RegWin(Control controller) {
+		setTitle("Registro de nuevo usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 396, 355);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Primer nombre");
+		lblNombre.setForeground(Color.BLUE);
 		lblNombre.setBounds(10, 11, 152, 21);
 		contentPane.add(lblNombre);
 		
 		JLabel lblPrimerApellido = new JLabel("Primer Apellido");
+		lblPrimerApellido.setForeground(Color.BLUE);
 		lblPrimerApellido.setBounds(10, 73, 152, 14);
 		contentPane.add(lblPrimerApellido);
 		
 		JLabel lblSegundoApellido = new JLabel("Segundo Apellido");
+		lblSegundoApellido.setForeground(Color.BLUE);
 		lblSegundoApellido.setBounds(10, 98, 152, 21);
 		contentPane.add(lblSegundoApellido);
 		
 		JLabel lblSegundoNombre = new JLabel("Segundo nombre");
+		lblSegundoNombre.setForeground(Color.BLUE);
 		lblSegundoNombre.setBounds(10, 43, 152, 14);
 		contentPane.add(lblSegundoNombre);
 		
@@ -81,6 +89,7 @@ public class RegWin extends JFrame {
 		textField_3.setColumns(10);
 		
 		JLabel lblMail = new JLabel("Mail");
+		lblMail.setForeground(Color.BLUE);
 		lblMail.setBounds(10, 135, 152, 14);
 		contentPane.add(lblMail);
 		
@@ -90,6 +99,7 @@ public class RegWin extends JFrame {
 		textField_4.setColumns(10);
 		
 		JLabel lblTelfono = new JLabel("Tel\u00E9fono");
+		lblTelfono.setForeground(Color.BLUE);
 		lblTelfono.setBounds(10, 166, 152, 14);
 		contentPane.add(lblTelfono);
 		
@@ -99,10 +109,12 @@ public class RegWin extends JFrame {
 		textField_5.setColumns(10);
 		
 		JLabel lblNombreUsuario = new JLabel("Nombre Usuario");
-		lblNombreUsuario.setBounds(10, 198, 90, 14);
+		lblNombreUsuario.setForeground(Color.BLUE);
+		lblNombreUsuario.setBounds(10, 198, 171, 14);
 		contentPane.add(lblNombreUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
+		lblContrasea.setForeground(Color.BLUE);
 		lblContrasea.setBounds(10, 233, 152, 14);
 		contentPane.add(lblContrasea);
 		
@@ -116,7 +128,12 @@ public class RegWin extends JFrame {
 		contentPane.add(textField_7);
 		textField_7.setColumns(10);
 		
-		JButton btnFinalizarRegistro = new JButton("Finalizar registro");
+		JButton btnFinalizarRegistro = new JButton("");
+		btnFinalizarRegistro.setFocusable(false);
+		btnFinalizarRegistro.setBorderPainted(false);
+		btnFinalizarRegistro.setContentAreaFilled(false);
+		btnFinalizarRegistro.setRolloverIcon(new ImageIcon(RegWin.class.getResource("/resources/FinRegistro111x32_pressed.png")));
+		btnFinalizarRegistro.setIcon(new ImageIcon(RegWin.class.getResource("/resources/FinRegistro111x32.png")));
 		btnFinalizarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(revisaDatosFaltantes()) {
@@ -131,7 +148,7 @@ public class RegWin extends JFrame {
 				controller.getView().getLogin().show();
 			}
 		});
-		btnFinalizarRegistro.setBounds(20, 273, 111, 32);
+		btnFinalizarRegistro.setBounds(10, 273, 121, 32);
 		contentPane.add(btnFinalizarRegistro);
 	}
 	

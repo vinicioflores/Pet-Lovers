@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Fotos {
+public class Fotos implements Serializable {
 	private ArrayList <String> fotosDirs;
 	
 	Fotos()
@@ -44,5 +45,10 @@ public class Fotos {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Fotos [fotosDirs=" + fotosDirs.toString() + "]";
 	}
 }

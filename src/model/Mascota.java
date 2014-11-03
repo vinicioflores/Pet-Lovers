@@ -19,7 +19,6 @@ public class Mascota implements Serializable {
     	fechaExtravio = new Date();
     	tipoMascota = new String();
     	raza = new Raza();
-    	razas = new ArrayList<Raza>();
     	chip = new Chip();
     	foto = new String();
     	contacto = new Contacto();
@@ -40,11 +39,6 @@ public class Mascota implements Serializable {
      * 
      */
     private Raza raza;
-
-    /**
-     * 
-     */
-    private ArrayList <Raza> razas;
 
     /**
      * 
@@ -104,7 +98,7 @@ public class Mascota implements Serializable {
     /**
      * 
      */
-    private Tamaño tamaño ;
+    private int tamaño ;
 
     /**
      * 
@@ -121,7 +115,7 @@ public class Mascota implements Serializable {
      */
     public Mascota(String nombre) {
         instanceAll();
-        this.nombre = nombre;
+        setNombre(nombre);
     }
 
     /**
@@ -320,26 +314,6 @@ public class Mascota implements Serializable {
     }
 
     /**
-     * @param raza 
-     * @return
-     */
-    public void addRaza(Raza raza) {
-        if(!razas.contains(raza)) razas.add(raza);
-    }
-
-    /**
-     * @param String 
-     * @return
-     */
-    public boolean removeRaza(Raza raza) {
-        if(razas.contains(raza)){
-        	razas.remove(raza);
-        	return true;
-        }
-        return false;
-    }
-
-    /**
      * @param fotodir 
      * @return
      */
@@ -358,7 +332,7 @@ public class Mascota implements Serializable {
 	@Override
 	public String toString() {
 		return "Mascota [tipoMascota=" + tipoMascota + ", raza=" + raza
-				+ ", razas=" + razas + ", nombre=" + nombre + ", chip=" + chip
+				+  ", nombre=" + nombre + ", chip=" + chip
 				+ ", color=" + color + ", foto=" + foto + ", contacto="
 				+ contacto + ", extraviado=" + extraviado + ", lugarExtravio="
 				+ lugarExtravio + ", fechaExtravio=" + fechaExtravio
@@ -389,6 +363,22 @@ public class Mascota implements Serializable {
 	{
 		if(this.getEstado().equals(pEstado) == true) return true;
 		return false;
+	}
+
+	public int getTamaño() {
+		return tamaño;
+	}
+
+	public void setTamaño(Tamaño tamaño) {
+		this.tamaño = tamaño.ordinal();
+	}
+
+	public Fotos getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(Fotos fotos) {
+		this.fotos = fotos;
 	}
 	
 	

@@ -1,15 +1,21 @@
 package model;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Estado {
+public class Estado implements Serializable {
 
     /**
      * 
      */
     public Estado() {
+    }
+    
+    public Estado(EstadoTipos s)
+    {
+    	setEstado(s);
     }
 
     /**
@@ -22,16 +28,12 @@ public class Estado {
      */
     private EstadoTipos estado ;
 
-
-
-
-
     /**
      * @param nFecha 
      * @return
      */
     public void setFecha(Date nFecha) {
-        // TODO implement here
+        this.fecha = nFecha;
     }
 
     /**
@@ -39,23 +41,26 @@ public class Estado {
      * @return
      */
     public void setEstado(EstadoTipos stat) {
-        // TODO implement here
+        this.estado = stat;
     }
 
     /**
      * @return
      */
     public Date getFecha() {
-        // TODO implement here
-        return null;
+        return this.fecha;
     }
 
     /**
      * @return
      */
     public EstadoTipos getEstado() {
-        // TODO implement here
-        return null;
+        return this.estado;
     }
+
+	@Override
+	public String toString() {
+		return "Estado [fecha=" + fecha + ", estado=" + estado + "]";
+	}
 
 }

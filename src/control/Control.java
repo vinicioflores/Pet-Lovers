@@ -1,7 +1,5 @@
 package control;
 
-import view.User;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -53,13 +51,13 @@ public class Control implements ActionListener {
         
         leerUsuariosRegistrados();
         
-        System.out.println("Reading ArrayList <User> ... ");
+        System.out.println("INFO: Reading ArrayList <User> ... ");
         System.out.println(users.toString());
         System.out.println(model.getRegistro().getUsuarios().toString());
         
-        leerArchivoRegistroMascotas(petsFileName);
+        model.getRegistro().leerArchivoRegistroMascotas(petsFileName);
         
-        System.out.println("Reading ArrayList <Mascota> ... ");
+        System.out.println("INFO: Reading ArrayList <Mascota> ... ");
         System.out.println(model.getRegistro().getMascotas().toString());
     }
     
@@ -67,6 +65,7 @@ public class Control implements ActionListener {
     {    
 	    User currentUser = null;
 	    ObjectInputStream oos=null;
+	    
 	    try {
 	    	oos = new ObjectInputStream(new FileInputStream(userRegName));
 	    } catch (FileNotFoundException e) {
@@ -99,53 +98,64 @@ public class Control implements ActionListener {
     public View  getView() { return view; }
     public Model getModel(){ return model; }
     
+    public void setModel(Model m){ this.model = m; }
     
-    public ArrayList <Mascota> leerArchivoRegistroMascotas(String file) throws  ClassNotFoundException, IOException
-    {
-    	ArrayList <Mascota> regValores = new ArrayList<Mascota>();
-    	ObjectInputStream ois = null;
-		try {
-			ois = new ObjectInputStream(new FileInputStream(file));
-		} catch (FileNotFoundException e1) {
-			System.out.println("Archivo de registro de mascotas " + file + " no encontrado! ... ");
-			 return null;
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-    	// Se lee el primer objeto
-    	Mascota aux=null;
-    	            
-    	// Mientras haya objetos
-    	while (aux != null)
-    	{
-    	    try {
-				aux = (Mascota) ois.readObject();
-				model.getRegistro().add(aux);
-			} catch (IOException e) {
-				System.out.println("Fallo al intentar leer linea de serialización de objeto ... ");
-				e.printStackTrace();
-				aux = null;
-			}
-    	}
-    	try {
-			ois.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	return regValores;
-    }
+    
+ 
     
     public void reportarMascota(ReporteMascota wReporte, String file) throws FileNotFoundException, ClassNotFoundException, IOException
     {
     	Mascota newPet = new Mascota();
     	
     	newPet.setNombre(wReporte.getTextField().getText());
-    	Chip newChip = new Chip();
-    	newChip.setID(String.valueOf(wReporte.getPasswordField().getPassword()));
-    	Color newColor = Color.NEGRO;
-    	newColor = Color.valueOf(wReporte.getComboBox_2().getName());
+    	Chip newChip = new Chip(String.valueOf(wReporte.getPasswordField().getPassword()));
+    	Color newColor = Color.ROJO;
+    	
+    	switch(wReporte.getComboBox_2().getSelectedIndex())
+    	{
+	    	case 1:
+	    		newColor = Color.ROJO;
+	    		break;
+	    	case 2:
+	    		newColor = Color.NEGRO;
+	    		break;
+	    	case 3:
+	    		newColor = Color.CAFE;
+	    		break;
+	    	case 4:
+	    		newColor = Color.BLANCO;
+	    		break;
+	    	case 5:
+	    		newColor = Color.GRIS;
+	    		break;
+	    	case 6:
+	    		newColor = Color.BEIGE;
+	    		break;
+    	}
+    	
     	newPet.setColor(newColor);
     	newPet.setChip(newChip);
+    	
+    	if(wReporte.getComboBox().getSelectedIndex() == Razas.Perro.ordinal())
+    		newPet.setTipoMascota("Perro");
+    	else if(wReporte.getComboBox().getSelectedIndex() == Razas.Gato.ordinal())
+    		newPet.setTipoMascota("Gato");
+    	else newPet.setTipoMascota("Otro");
+    	
+    	
+    	Raza raza = new Raza();
+    	
+    	if(newPet.getTipoMascota().equals("Perro"))
+    		raza.add(Razas.Perro);
+    	else if(newPet.getTipoMascota().equals("Gato"))
+    		raza.add(Razas.Gato);
+    	else raza.add(Razas.Otro);
+    	
+    	raza.setRaza(raza.get());
+    	newPet.setRaza(raza);
+    	newPet.getRaza().setRaza(raza.get());
+    	
+    	
     	Contacto newContact = model.getRegistro().findByUser(usuarioLogeado);
     	newContact.agregarMascotaEncontrada(newChip);
     	
@@ -157,20 +167,34 @@ public class Control implements ActionListener {
     		newContact.setAceptaRecompensa(false);
     	}
     	
+    	newPet.setEstado(new Estado(EstadoTipos.EXTRAVIADO));
+    	if(wReporte.getComboBox_3().getSelectedIndex() != EstadoTipos.EXTRAVIADO.ordinal())
+    		newPet.setEstado(new Estado(EstadoTipos.ENCONTRADO));
+    	
+    	if(wReporte.getChckbxHayRecompensa().isSelected() == true){
+    		
+    		char moneda='0';
+    		
+    		if(wReporte.getComboBox_4().getSelectedIndex() == 1) moneda = '$';
+    		else if(wReporte.getComboBox_4().getSelectedIndex() == 2) moneda = '\u20AC';
+    		else moneda = '\u20A1';
+    		newPet.setRecompensa(new Recompensa(Float.parseFloat(wReporte.getFormattedTextField().getText()), moneda));
+    	
+    	}
+    		
+    	if(wReporte.getComboBox_5().getSelectedIndex() == 1)
+    		newPet.setTamaño(Tamaño.MUYPEQUEÑO);
+    	else if(wReporte.getComboBox_5().getSelectedIndex() == 2)
+    		newPet.setTamaño(Tamaño.PEQUEÑO);
+    	else if(wReporte.getComboBox_5().getSelectedIndex() == 3)
+    		newPet.setTamaño(Tamaño.MEDIANO);
+    	else if(wReporte.getComboBox_5().getSelectedIndex() == 4)
+    		newPet.setTamaño(Tamaño.GRANDE);
+    	else newPet.setTamaño(Tamaño.MUYGRANDE);
+    	
+    	
     	newPet.setContacto(newContact);
     	model.getRegistro().add(newPet);
-    
-    	int contadorMascotas = 1;
-    	ObjectOutputStream ois=null;
-		try {
-			ois = new ObjectOutputStream(new FileOutputStream(file));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		serializeMascotas();
     }
     
@@ -184,8 +208,8 @@ public class Control implements ActionListener {
 	}
 
 	public boolean addPersonas(User relatedUser, String primerNombre, 
-    						String segundoNombre, String primerApellido,
-    						String segundoApellido,String email,String telefono)
+    						   String segundoNombre, String primerApellido,
+    						   String segundoApellido,String email,String telefono)
     {
     	Contacto nPersona = new Contacto();
     	nPersona.setUsuarioAsociado(relatedUser);
@@ -203,11 +227,7 @@ public class Control implements ActionListener {
     		return false;
     	}
     }
-    
-    public void agregarRazas(JComboBox listaRazas)
-    {
-    	
-    }
+  
     
     /**
      * @param username 
@@ -225,7 +245,6 @@ public class Control implements ActionListener {
         	}
         }
         return false;
-        
     }
     
     /**
@@ -268,7 +287,7 @@ public class Control implements ActionListener {
         try {
 			oos = new ObjectOutputStream(new FileOutputStream("users.rgf"));
 		} catch (FileNotFoundException e) {
-			System.out.println("Error, no se encontró el archivo de registro de usuarios ... ");
+			System.out.println("ERR: Error, no se encontró el archivo de registro de usuarios ... ");
 			return;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -288,7 +307,7 @@ public class Control implements ActionListener {
         	}
 			
 		} catch (IOException e) {
-			System.out.println("Error al intentar escribir en el archivo de registro de usuarios ... ");
+			System.out.println("ERR: Error al intentar escribir en el archivo de registro de usuarios ... ");
 		}
         
         oos.close();

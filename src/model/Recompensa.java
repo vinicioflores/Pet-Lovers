@@ -1,10 +1,11 @@
 package model;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Recompensa {
+public class Recompensa implements Serializable {
 
     /**
      * 
@@ -29,7 +30,8 @@ public class Recompensa {
      * @return
      */
     public Recompensa(float monto, char moneda) {
-        // TODO implement here
+        setMonto(monto);
+        setMoneda(moneda);
     }
 
     /**
@@ -37,7 +39,7 @@ public class Recompensa {
      * @return
      */
     public Recompensa(char moneda) {
-        // TODO implement here
+        setMoneda(moneda);
     }
 
     /**
@@ -45,7 +47,7 @@ public class Recompensa {
      * @return
      */
     public Recompensa(float monto) {
-        // TODO implement here
+        setMonto(monto);
     }
 
     /**
@@ -53,7 +55,7 @@ public class Recompensa {
      * @return
      */
     public void setMoneda(char nMoneda) {
-        // TODO implement here
+        this.moneda = nMoneda;
     }
 
     /**
@@ -61,23 +63,26 @@ public class Recompensa {
      * @return
      */
     public void setMonto(float nMonto) {
-        // TODO implement here
+        this.monto = nMonto;
     }
 
     /**
      * @return
      */
     public char getMoneda() {
-        // TODO implement here
-        return '0';
+        return this.moneda;
     }
 
     /**
      * @return
      */
     public float getMonto() {
-        // TODO implement here
-        return 0.0f;
+        return this.monto;
     }
+
+	@Override
+	public String toString() {
+		return "Recompensa [monto=" + monto + ", moneda=" + moneda + "]";
+	}
 
 }
