@@ -48,18 +48,23 @@ import control.*;
 import javax.swing.ListSelectionModel;
 
 import model.Mascota;
+
 import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame {
 
+	private ReporteMascota reports;
+	private Búsqueda searchWindow;
 	private Control controller;
 	private String file = "pets.rgf";
 	private JPanel contentPane;
 	private MainWindow pThis = this;
-	private JList<JLabel> list = new JList();
+	private Listado list = new Listado();
+	private JButton verPerfilButton;
+	public PerfilMascota ventanaPerfil;  
 
 	/**
-	 * Create the frame.
+	 * Construye el marco principal.
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 * @throws FileNotFoundException 
@@ -83,12 +88,19 @@ public class MainWindow extends JFrame {
 		desktopPane.add(panel);
 		panel.setLayout(null);
 		
-		list = new JList();
+		list = new Listado();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(10, 11, 276, 498);
+		list.setBounds(10, 11, 276, 486);
 		cargarRegistros();
 		
 		panel.add(list);
+		
+		verPerfilButton = new JButton("Ver perfil");
+		verPerfilButton.setFont(new Font("Times New Roman", Font.BOLD, 11));
+		verPerfilButton.setForeground(new Color(255, 0, 0));
+		verPerfilButton.setBounds(10, 499, 276, 21);
+		verPerfilButton.addActionListener(controller);
+		panel.add(verPerfilButton);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
@@ -105,7 +117,7 @@ public class MainWindow extends JFrame {
 		btnNewButton.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 ReporteMascota reports = new ReporteMascota(controller);
+				  reports = new ReporteMascota(controller);
 				  reports.setVisible(true);
 				  reports.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				  reports.addWindowListener(new WindowListener() {
@@ -186,8 +198,12 @@ public class MainWindow extends JFrame {
 		btnNewButton_1.setBorderPainted(false);
 		btnNewButton_1.setRolloverSelectedIcon(new ImageIcon(MainWindow.class.getResource("/resources/busquedas276x43_pressed.png")));
 		btnNewButton_1.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
+		
+		/*** Evento para el Botón de Búsquedas **/
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				searchWindow = new Búsqueda(controller);
+				searchWindow.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(10, 65, 276, 43);
@@ -235,12 +251,22 @@ public class MainWindow extends JFrame {
 		btnNewButton_5.setBounds(10, 281, 276, 43);
 		panel_1.add(btnNewButton_5);
 		
-		JButton btnNewButton_6 = new JButton("Puntuar Adoptantes");
+		JButton btnNewButton_6 = new JButton("");
+		btnNewButton_6.setFocusable(false);
+		btnNewButton_6.setContentAreaFilled(false);
+		btnNewButton_6.setBorderPainted(false);
+		btnNewButton_6.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/puntuar276x43.png")));
+		btnNewButton_6.setRolloverIcon(new ImageIcon(MainWindow.class.getResource("/resources/puntuar276x43_pressed.png")));
 		btnNewButton_6.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 		btnNewButton_6.setBounds(10, 335, 276, 43);
 		panel_1.add(btnNewButton_6);
 		
-		JButton btnNewButton_7 = new JButton("Cerrar Sistema");
+		JButton btnNewButton_7 = new JButton("");
+		btnNewButton_7.setRolloverIcon(new ImageIcon(MainWindow.class.getResource("/resources/cerrar276x93_pressed.png")));
+		btnNewButton_7.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/cerrar276x93.png")));
+		btnNewButton_7.setFocusable(false);
+		btnNewButton_7.setBorderPainted(false);
+		btnNewButton_7.setContentAreaFilled(false);
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -255,29 +281,39 @@ public class MainWindow extends JFrame {
 	}
 	
 	public void cargarRegistros() throws FileNotFoundException, ClassNotFoundException, IOException
-	{
-		list.removeAll();
-		int i=0;
-		String values[] = new String[controller.getModel().getRegistro().getMascotas().size()];
-		try {
-			for(Mascota pt : controller.getModel().getRegistro().getMascotas()){
-				System.out.println("Iteración #" + String.valueOf(i));
-				values[i] = pt.getNombre() + " ->  " + pt.getTipoMascota();
-				i++;
-			}
-		} catch (Exception e) {
-			System.out.println("ERR: Error de indexación ... ");
-		}
-		
-		list.setModel(new AbstractListModel() {
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		
-		list.repaint();
+	{	
+		list.JListAddMascotas(controller.getModel().getRegistro().getMascotas());
+	}
+
+	public ReporteMascota getReports() {
+		return reports;
+	}
+
+	public void setReports(ReporteMascota reports) {
+		this.reports = reports;
+	}
+
+	public Búsqueda getSearchWindow() {
+		return searchWindow;
+	}
+
+	public void setSearchWindow(Búsqueda searchWindow) {
+		this.searchWindow = searchWindow;
+	}
+
+	public JButton getVerPerfilButton() {
+		return verPerfilButton;
+	}
+
+	public void setVerPerfilButton(JButton verPerfilButton) {
+		this.verPerfilButton = verPerfilButton;
+	}
+
+	public Listado getList() {
+		return list;
+	}
+
+	public void setList(Listado list) {
+		this.list = list;
 	}
 }

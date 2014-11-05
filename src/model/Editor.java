@@ -53,7 +53,7 @@ public class Editor extends Registro {
 	        target.setChip(pet.getChip());
 	        target.setNombre(pet.getNombre());
 	        target.setTipoMascota(pet.getTipoMascota());
-	        target.setColor(pet.getColor());
+	        target.setPetColor(pet.getPetColor());
 	        target.setContacto(pet.getContacto());
 	        target.setDescripcion(pet.getDescripcion());
 	        target.setEstado(pet.getEstado());

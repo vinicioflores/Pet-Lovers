@@ -1,4 +1,5 @@
 package model;
+
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
+
+import winterwell.jtwitter.Twitter;
 
 /**
  * 
@@ -60,6 +63,14 @@ public class Registro implements Serializable {
      */
     public void add(Mascota nPet) {
         mascotas.add(nPet);
+    }
+    
+    public Mascota getEnd()
+    {
+    	Mascota pm=null;
+    	for(Mascota pk : mascotas)
+    		pm = pk;
+    	return pm;
     }
 
     /**
@@ -121,7 +132,7 @@ public class Registro implements Serializable {
      * @return None
      */
     public void publish(Mascota nPet , Sitios socialNetwork ) {
-        // TODO implement here
+    	
     }
 
     /**
@@ -265,4 +276,12 @@ public class Registro implements Serializable {
 			}
 	    }
 	
+	   public Contacto findContacto(String personName)
+	   {
+		   for(Contacto pContacto : usuarios){
+			   if(pContacto.getPrimerNombre().equals(personName))
+				   return pContacto;
+		   }
+		   return null;
+	   }
 }

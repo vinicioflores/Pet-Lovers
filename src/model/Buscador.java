@@ -67,7 +67,7 @@ public class Buscador extends Editor {
      * @param raza 
      * @return
      */
-    public Mascota findRaza(Raza raza) {
+    public Mascota findRaza(String raza) {
     	for(int k = 0; mascotas.get(k) != null; k++){
     		if(mascotas.get(k).getRaza().equals(raza) )return mascotas.get(k);
     	}

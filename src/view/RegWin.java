@@ -167,7 +167,7 @@ public class RegWin extends JFrame {
 		   textField_6.getText().equals("") == true ||
 		   textField_7.getText().equals("") == true)
 		{
-			ErrorDialog dialogoErrorFaltanDatos = new ErrorDialog("Ha dejado campos con información faltante o inválida. Por favor rellene "
+			Dialog dialogoErrorFaltanDatos = new Dialog("Ha dejado campos con información faltante o inválida. Por favor rellene "
 					+ "todos los campos con la información correspondiente");
 			dialogoErrorFaltanDatos.setVisible(true);
 			dialogoErrorFaltanDatos.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

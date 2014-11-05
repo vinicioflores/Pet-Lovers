@@ -18,7 +18,8 @@ public class Mascota implements Serializable {
     {
     	fechaExtravio = new Date();
     	tipoMascota = new String();
-    	raza = new Raza();
+    	razas = new Raza();
+    	raza = new String();
     	chip = new Chip();
     	foto = new String();
     	contacto = new Contacto();
@@ -38,7 +39,7 @@ public class Mascota implements Serializable {
     /**
      * 
      */
-    private Raza raza;
+    private String raza;
 
     /**
      * 
@@ -53,7 +54,7 @@ public class Mascota implements Serializable {
     /**
      * 
      */
-    private Color color;
+    private PetColor PetColor;
 
     /**
      * 
@@ -108,6 +109,7 @@ public class Mascota implements Serializable {
     /**
      * 
      */
+    private Raza razas;
 
     /**
      * @param nombre 
@@ -130,7 +132,7 @@ public class Mascota implements Serializable {
      * @param raza 
      * @return
      */
-    public void setRaza(Raza raza) {
+    public void setRaza(String raza) {
         this.raza = raza;
     }
 
@@ -151,11 +153,11 @@ public class Mascota implements Serializable {
     }
 
     /**
-     * @param color 
+     * @param PetColor 
      * @return
      */
-    public void setColor(Color color) {
-        this.color = color;
+    public void setPetColor(PetColor PetColor) {
+        this.PetColor = PetColor;
     }
 
     /**
@@ -224,7 +226,7 @@ public class Mascota implements Serializable {
     /**
      * @return
      */
-    public Raza getRaza() {
+    public String getRaza() {
         return raza;
     }
 
@@ -245,8 +247,8 @@ public class Mascota implements Serializable {
     /**
      * @return
      */
-    public Color getColor() {
-        return color;
+    public PetColor getPetColor() {
+        return PetColor;
     }
 
     /**
@@ -333,7 +335,7 @@ public class Mascota implements Serializable {
 	public String toString() {
 		return "Mascota [tipoMascota=" + tipoMascota + ", raza=" + raza
 				+  ", nombre=" + nombre + ", chip=" + chip
-				+ ", color=" + color + ", foto=" + foto + ", contacto="
+				+ ", Color=" + PetColor + ", foto=" + foto + ", contacto="
 				+ contacto + ", extraviado=" + extraviado + ", lugarExtravio="
 				+ lugarExtravio + ", fechaExtravio=" + fechaExtravio
 				+ ", recompensa=" + recompensa + ", descripcion=" + descripcion

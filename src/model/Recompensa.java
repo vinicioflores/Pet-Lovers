@@ -84,5 +84,12 @@ public class Recompensa implements Serializable {
 	public String toString() {
 		return "Recompensa [monto=" + monto + ", moneda=" + moneda + "]";
 	}
+	
+	public boolean equals(Recompensa r)
+	{
+		if(r.monto == this.monto && r.moneda == this.moneda) 
+			return true;
+		return false;
+	}
 
 }

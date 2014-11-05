@@ -7,7 +7,7 @@
  * 
  * Curso IC-2101 - Programación Orientada a Objetos
  * 
- * Prof. Adriana Alvárez  
+ * Prof. Adriana Alvárez Figueroa
  */
 
 

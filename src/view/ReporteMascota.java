@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,8 +25,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileView;
 
-import model.Color;
+import model.PetColor;
 import model.Razas;
 import model.RazasGatos;
 import model.RazasPerros;
@@ -38,14 +43,13 @@ public class ReporteMascota extends JFrame {
 	private JPanel contentPane;
 	
 	private JComboBox comboBox;      // Tipo de mascota
-	private JComboBox comboBox_1;    // Raza de animal
 	private JComboBox comboBox_2;    // Color de mascota
 	private JComboBox comboBox_3;    // Tipo de reporte o estado inicial de reporte
 	private JComboBox comboBox_4;    // Moneda de recompensa (si corresponde)
 	private JComboBox comboBox_5;    // Lista de tamaños
 	
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField fotoTextField;
 	private JTextField textField_4;
 	
 	private JPasswordField passwordField;
@@ -55,6 +59,10 @@ public class ReporteMascota extends JFrame {
 	private JEditorPane editorPane;
 	private JFormattedTextField formattedTextField;
 	private ReporteMascota pVentanaReporte = this;
+	private JButton facebookPublishButton;
+	private JComboBox razaComboBox;
+	
+	private JButton btnReportar;
 	
 	
 	/**
@@ -71,28 +79,6 @@ public class ReporteMascota extends JFrame {
 		contentPane.setLayout(null);
 		
 		comboBox = new JComboBox();
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				int selectedIndex = comboBox.getSelectedIndex();
-				if(selectedIndex == Razas.Perro.ordinal()){
-					comboBox_1.setModel(new DefaultComboBoxModel(RazasPerros.values()));
-					comboBox_1.repaint();
-				}
-				
-				else if(selectedIndex == Razas.Gato.ordinal()){
-					comboBox_1.setModel(new DefaultComboBoxModel(RazasGatos.values()));
-					comboBox_1.repaint();
-				}
-				
-				else {
-					comboBox_1.setModel(new DefaultComboBoxModel(new String[] {""}));
-					comboBox_1.repaint();
-				}
-					
-			}
-		});
-		
 		comboBox.setBounds(10, 36, 145, 30);
 		comboBox.setModel(new DefaultComboBoxModel(Razas.values()));
 		contentPane.add(comboBox);
@@ -104,10 +90,6 @@ public class ReporteMascota extends JFrame {
 		JLabel lblRazas = new JLabel("Raza");
 		lblRazas.setBounds(219, 11, 46, 14);
 		contentPane.add(lblRazas);
-		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(165, 36, 154, 30);
-		contentPane.add(comboBox_1);
 		
 		JLabel lblNombreDeMascota = new JLabel("Nombre de Mascota");
 		lblNombreDeMascota.setBounds(10, 110, 103, 14);
@@ -137,20 +119,33 @@ public class ReporteMascota extends JFrame {
 		
 		comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(465, 36, 136, 30);
-		comboBox_2.setModel(new DefaultComboBoxModel(Color.values()));
+		comboBox_2.setModel(new DefaultComboBoxModel(PetColor.values()));
 		contentPane.add(comboBox_2);
 		
 		JLabel lblFoto = new JLabel("Foto");
 		lblFoto.setBounds(10, 194, 46, 14);
 		contentPane.add(lblFoto);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(160, 191, 229, 20);
-		textField_1.setEditable(false);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		fotoTextField = new JTextField();
+		fotoTextField.setBounds(160, 191, 229, 20);
+		fotoTextField.setEditable(false);
+		contentPane.add(fotoTextField);
+		fotoTextField.setColumns(10);
 		
 		Button button = new Button("Cargar foto");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser imgAskDialog = new JFileChooser(); 
+				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("Imágenes JPG, PNG & GIF","jpg","png","gif");
+				imgAskDialog.setFileFilter(imgFilter);
+				int retVal = imgAskDialog.showOpenDialog(pVentanaReporte);
+				  if(retVal == JFileChooser.APPROVE_OPTION) {
+				       System.out.println("Cargando archivo de foto de mascota: " +
+				            imgAskDialog.getSelectedFile().getName());
+				       fotoTextField.setText(imgAskDialog.getSelectedFile().getPath());
+				    }
+			}
+		});
 		button.setBounds(395, 189, 70, 22);
 		contentPane.add(button);
 		
@@ -221,17 +216,24 @@ public class ReporteMascota extends JFrame {
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"$ - D\u00F3lares", "\u20AC - Euros", "\u20A1 - Colones"}));
 		contentPane.add(comboBox_4);
 		
-		JButton btnReportar = new JButton("Reportar!");
-		btnReportar.setBounds(10, 435, 103, 31);
+		btnReportar = new JButton("Reportar!");
 		btnReportar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					controller.reportarMascota(pVentanaReporte, "pets.rgf");
-				} catch (ClassNotFoundException | IOException e1) {
-					e1.printStackTrace();
-				}
+			
+					System.out.println("Botón de reportar mascota pulsado ... ");
+					try {
+						controller.getDriverMascotas().reportarMascota(pVentanaReporte, "pets.rgf");
+						Dialog notifyDialog = new Dialog("La mascota " + pVentanaReporte.getTextField().getText() + " fue reportada exitosamente!");
+						notifyDialog.setVisible(true);
+						pVentanaReporte.dispose();
+					} catch (ClassNotFoundException | IOException e1) {
+						Dialog errDialog = new Dialog("Error al intentar reportar a la mascota " + pVentanaReporte.getTextField().getText() + ", posible error de E/S o de instanciamiento ...");
+						errDialog.setVisible(true);
+					}
 			}
 		});
+		btnReportar.setBounds(10, 435, 103, 31);
+		
 		contentPane.add(btnReportar);
 		
 		JButton btnAtrs = new JButton("Atr\u00E1s");
@@ -251,6 +253,41 @@ public class ReporteMascota extends JFrame {
 		JLabel lblTamao = new JLabel("Tama\u00F1o");
 		lblTamao.setBounds(365, 11, 46, 14);
 		contentPane.add(lblTamao);
+		
+		facebookPublishButton = new JButton("");
+		facebookPublishButton.setIcon(new ImageIcon(ReporteMascota.class.getResource("/resources/mini-logo-facebook-logo.jpg")));
+		facebookPublishButton.setFocusable(false);
+		facebookPublishButton.setContentAreaFilled(false);
+		facebookPublishButton.setBounds(518, 384, 36, 36);
+		contentPane.add(facebookPublishButton);
+		
+		JButton twitterPublishButton = new JButton("");
+		twitterPublishButton.setIcon(new ImageIcon(ReporteMascota.class.getResource("/resources/twitter_icon_36x36.gif")));
+		twitterPublishButton.setFocusable(false);
+		twitterPublishButton.setContentAreaFilled(false);
+		twitterPublishButton.setBounds(563, 384, 36, 36);
+		contentPane.add(twitterPublishButton);
+		
+		razaComboBox = new JComboBox();
+		razaComboBox.setModel(new DefaultComboBoxModel(RazasPerros.values()));
+		razaComboBox.setBounds(165, 36, 150, 30);
+		
+		
+		comboBox.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent arg0){
+				if(comboBox.getSelectedIndex() == 0){
+					razaComboBox.setModel(new DefaultComboBoxModel(RazasPerros.values()));			
+				}
+				
+				else if(comboBox.getSelectedIndex() == 1){
+					razaComboBox.setModel(new DefaultComboBoxModel(RazasGatos.values()));
+				}
+				
+				else razaComboBox.setModel(new DefaultComboBoxModel());
+			}
+		});
+		
+		contentPane.add(razaComboBox);
 	}
 
 	
@@ -260,14 +297,6 @@ public class ReporteMascota extends JFrame {
 
 	public void setComboBox(JComboBox comboBox) {
 		this.comboBox = comboBox;
-	}
-
-	public JComboBox getComboBox_1() {
-		return comboBox_1;
-	}
-
-	public void setComboBox_1(JComboBox comboBox_1) {
-		this.comboBox_1 = comboBox_1;
 	}
 
 	public JComboBox getComboBox_2() {
@@ -302,12 +331,12 @@ public class ReporteMascota extends JFrame {
 		this.textField = textField;
 	}
 
-	public JTextField getTextField_1() {
-		return textField_1;
+	public JTextField getFotoTextField() {
+		return fotoTextField;
 	}
 
-	public void setTextField_1(JTextField textField_1) {
-		this.textField_1 = textField_1;
+	public void setFotoTextField(JTextField textField_1) {
+		this.fotoTextField = textField_1;
 	}
 
 
@@ -375,5 +404,34 @@ public class ReporteMascota extends JFrame {
 
 	public void setComboBox_5(JComboBox comboBox_5) {
 		this.comboBox_5 = comboBox_5;
+	}
+
+	public JComboBox getRazaComboBox() {
+		return razaComboBox;
+	}
+
+
+	public void setRazaComboBox(JComboBox razaComboBox) {
+		this.razaComboBox = razaComboBox;
+	}
+
+
+	public JButton getFacebookPublishButton() {
+		return facebookPublishButton;
+	}
+
+
+	public void setFacebookPublishButton(JButton facebookPublishButton) {
+		this.facebookPublishButton = facebookPublishButton;
+	}
+
+
+	public JButton getBtnReportar() {
+		return btnReportar;
+	}
+
+
+	public void setBtnReportar(JButton btnReportar) {
+		this.btnReportar = btnReportar;
 	}
 }

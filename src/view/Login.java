@@ -30,7 +30,7 @@ public class Login extends JFrame {
 	private MainWindow mainWin;
 	private Control controller;
 	private static final long serialVersionUID=1092742389479238470L;
-	
+	private JButton btnIngresar;
 	
     /**
      * 
@@ -78,39 +78,13 @@ public class Login extends JFrame {
     	btnRegistrarse.setBounds(10, 78, 165, 23);
     	getContentPane().add(btnRegistrarse);
     	
-    	JButton btnIngresar = new JButton("");
+    	btnIngresar = new JButton("");
     	btnIngresar.setContentAreaFilled(false);
     	btnIngresar.setBorderPainted(false);
     	btnIngresar.setRolloverIcon(new ImageIcon(Login.class.getResource("/resources/Login89x23_pressed.png")));
     	btnIngresar.setIcon(new ImageIcon(Login.class.getResource("/resources/Login89x23.png")));
     	btnIngresar.setFocusable(false);
-    	btnIngresar.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) {
-    			try {
-    				if(controller.login(textField.getText(), String.valueOf(passwordField.getPassword()))){
-    					mainWin = controller.getView().getLogin().doMainWindow();   
-    					mainWin.setVisible(true);
-    	    			mainWin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    				} else { 
-    					ErrorDialog loginErr =  new ErrorDialog("No se encontró usuario '" + textField.getText()  +"' registrado en el sistema ... ");
-    					loginErr.setVisible(true);
-    					loginErr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    				}
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-    			
-    			textField.setText("");
-    			passwordField.setText("");
-    		}
-    	});
+    	btnIngresar.addActionListener(controller);
     	btnIngresar.setBounds(185, 78, 89, 23);
     	getContentPane().add(btnIngresar);
     	
@@ -134,6 +108,47 @@ public class Login extends JFrame {
      */
     private JTextField textField;
     private JPasswordField passwordField;
+
+
+	public RegWin getRegwin() {
+		return regwin;
+	}
+
+	public void setRegwin(RegWin regwin) {
+		this.regwin = regwin;
+	}
+
+	public MainWindow getMainWin() {
+		return mainWin;
+	}
+
+	public void setMainWin(MainWindow mainWin) {
+		this.mainWin = mainWin;
+	}
+
+	public JButton getBtnIngresar() {
+		return btnIngresar;
+	}
+
+	public void setBtnIngresar(JButton btnIngresar) {
+		this.btnIngresar = btnIngresar;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
 
     /**
      * 

@@ -1,58 +1,189 @@
 package model;
+
 import java.io.Serializable;
-import java.util.*;
 
-/**
- * 
- */
 public class Raza implements Serializable {
-
-	public Raza(){
-		razas = new ArrayList<Razas>();
+	private final String[] strRazasPerros = new String[] {
+			"AFFENPINSCHER",
+			"AFGANO",
+			"AKITA",
+			"ALANO",
+			"AMERICAN_BULLY",
+			"AMERICAN_FOXHOUND",
+			"AMERICAN_PITBULL_TERRIER",
+			"AMERICAN_STAFFORDSHIRE",
+			"AUSTRALIAN_SILKY_TERRIER",
+			"AZAWAKH",
+			"BARBET",
+			"BASENJI",
+			"BASSET_ARTESIANO",
+			"BASSET_GASCUÑA",
+			"BASSET_HOUND",
+			"BEAGLE",
+			"BERGER_PICARDIE",
+			"BICHÓN",
+			"BILLY",
+			"BLOODHOUND",
+			"BOBTAIL",
+			"BODEGUERO_ANDALUZ",
+			"BOERBOEL",
+			"BORDER_COLLIE",
+			"BORDER_TERRIER",
+			"BORZOI",
+			"BÓXER",
+			"BRACO_ALEMÁN",
+			"BUHUND_NORUEGO",
+			"BULL_TERRIER",
+			"BULLDOG_AMERICANO",
+			"BULLDOG_FRANCÉS",
+			"CANICHE",
+			"CHIHUAHUA",
+			"CHOW_CHOW",
+			"COCKER",
+			"COLLIE",
+			"DÁLMATA",
+			"DOBERMAN",
+			"DREVER",
+			"FOX_TERRIER",
+			"FOXHOUND",
+			"GALGO",
+			"GOLDEN_RETRIEVER",
+			"GRIFÓN",
+			"HARRIER",
+			"HÍBRIDO",
+			"HOKKAIDO",
+			"HOVAWART",
+			"HUSKY_SIBERIANO",
+			"KOREA_JINCO",
+			"KUVASZ",
+			"KROMFOHRLÄNDER",
+			"KOMONDOR",
+			"KISHU",
+			"KEEDHOND",
+			"LABRADOR_RETRIEVER",
+			"LAÏKA_SIBERIANO",
+			"LAÏKA_RUSO_EUROPEO",
+			"LAKELAND_TERRIER",
+			"LANDSEER",
+			"LEONBERGER",
+			"LUNDEHUND",
+			"MALAMUTE",
+			"MASTÍN",
+			"MUDI",
+			"MÜNSTERLÄNDER",
+			"PAPILLON",
+			"PARSON_RUSSELL_TERRIER",
+			"PASTOR_ALEMÁN",
+			"PASTOR_BELGA",
+			"PASTOR_BLANCO_SUIZO",
+			"PASTOR_AUSTRALIANO",
+			"PASTOR_CATALÁN",
+			"PASTOR_ANATOLIA",
+			"PASTOR_BEAUCE",
+			"PASTOR_PIRINEOS",
+			"PASTOR_SHETLAND",
+			"PASTOR_POLACO",
+			"PEQUINÉS",
+			"PINSCHER",
+			"PLOTT_HOUND",
+			"POINTER",
+			"POITEVIN",
+			"POMERANIA",
+			"PORCELAINE",
+			"PUDELPOINTER",
+			"PULI",
+			"PUMI",
+			"RIDGEBACK_RODESIA",
+			"ROTTWEILER",
+			"SABUESO_ALEMÁN",
+			"SABUESO_ARTESIANO",
+			"SABUESO",
+			"SAN_BERNARDO",
+			"SCHNAUZER",
+			"SETTER",
+			"SHIBA",
+			"SHIHTZU",
+			"SILKY_TERRIER",
+			"SHIKOKU",
+			"SPITZ",
+			"STAFFORDSHIRE",
+			"TECKEL",
+			"TEJONERO",
+			"TERRANOVA",
+			"TERRIER",
+			"VALHUND_SUECO",
+			"VOLPINO_ITALIANO",
+			"WETTERHOUND",
+			"WHIPPET",
+			"WOLFHOUND_IRLANDÉS",
+			"YORKSHIRE_TERRIER"
+			
+	};
+	private final String[] strRazasGatos = new String[] {
+			"WIREHAIR_AMERICANO",
+			"KHANO_MANEE",
+			"ORIENTAL_PELOLARGO",
+			"RABÓN_JAPONÉS",
+			"SILVESTRE_BOSQUE_NORUEGA",
+			"TONQUINÉS",
+			"ABISINIOS",
+			"CURL_AMERICANO",
+			"SHORTHAIR_AMERICANO",
+			"RUSO_AZUL",
+			"BALINES",
+			"BENGALÍ",
+			"BOBTAIL_JAPONÉS",
+			"BOMBAY",
+			"SHORTHAIR_BRITÁNICO",
+			"BURMILLA",
+			"SPANGLED_CALIFORNIANO",
+			"CHARTREAUX",
+			"EUROPEO_COMÚN",
+			"CORNISH_RED",
+			"CYMRIC",
+			"DEVON_REX",
+			"EXÓTICO",
+			"FOLDEX",
+			"GERMAN_REX",
+			"HABANA",
+			"HIGHLAND_FOLD",
+			"HIMALAYO",
+			"JAVANÉS",
+			"KORAT",
+			"MAINE_COON",
+			"MANX",
+			"MAU_EGIPCIO",
+			"MUNCHKIN",
+			"NEBELUNG",
+			"OCICAT",
+			"PETERBALD",
+			"PIXIE_BOB",
+			"RAGAMUFFIN",
+			"RAGDOLL",
+			"SAGRADO_BIRMANIA",
+			"SCOTTISH_FOLD",
+			"SERENGUETI",
+			"SEYCHELLOIS",
+			"SIBERIANO",
+			"SINGAPURA",
+			"SKOGKATT",
+			"SHOWSHOE",
+			"SOKOKE",
+			"SPHYNX",
+			"THAI",
+			"VAN_TURCO",
+			"YORK_CHOCOLATE",
+			"BURMÉS"
+			
+	};
+	
+	public String get_perro(int ordinal)
+	{
+		return strRazasPerros[ordinal];
 	}
-    /**
-     * 
-     */
-    public Raza(Razas raza) {
-    	razas = new ArrayList <Razas> ();
-    	razas.add(raza);
-    	setRaza(raza);
-    }
-
-    /**
-     * 
-     */
-    private ArrayList <Razas> razas ;
-    /**
-     * 
-     */
-    private Razas raza;
-
-    /**
-     * @param raza 
-     * @return
-     */
-    public void add(Razas raza) {
-        razas.add(raza);
-    }
-
-    /**
-     * @return
-     */
-    public Razas get() {
-    	return raza;
-    }
-    
-    /* Selecciona una raza de la lista de razas y la asigna a la raza actual */
-    public void setRaza(Razas raza)
-    {
-    	for(Razas pR : razas){
-    		if(pR.equals(raza))
-    			raza = pR;
-    	}
-    }
-	@Override
-	public String toString() {
-		return "Raza [razas=" + razas.toString() + ", raza=" + raza + "]";
+	
+	public String get_gato(int ordinal)
+	{
+		return strRazasGatos[ordinal];
 	}
 }

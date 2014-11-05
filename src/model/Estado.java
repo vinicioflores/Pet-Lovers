@@ -63,4 +63,10 @@ public class Estado implements Serializable {
 		return "Estado [fecha=" + fecha + ", estado=" + estado + "]";
 	}
 
+	public boolean equals(Estado e) {
+		if(e.estado.equals(this.estado)) 
+			return true;
+		return false;
+	}
+
 }
